@@ -4,6 +4,8 @@ import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -74,7 +76,8 @@ fun OnboardingScreen(vm: CasaViewModel) {
     Box(Modifier.fillMaxSize().background(cs.background)) {
         AnimatedBlobs(Modifier.fillMaxSize())
         Column(
-            Modifier.fillMaxSize().systemBarsPadding().imePadding().padding(24.dp),
+            // scrollable: without it the keyboard squeezes the fields; fillMaxSize first keeps the bottom arrangement
+            Modifier.fillMaxSize().systemBarsPadding().imePadding().verticalScroll(rememberScrollState()).padding(24.dp),
             verticalArrangement = Arrangement.Bottom,
         ) {
             Logo()

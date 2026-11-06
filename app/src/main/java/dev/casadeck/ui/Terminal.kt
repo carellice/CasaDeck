@@ -7,6 +7,8 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -79,7 +81,8 @@ private fun SshLogin(vm: CasaViewModel, onConnect: () -> Unit) {
         vm.prefs.sshUser = user.trim(); vm.prefs.sshPort = port.trim(); vm.sshPass = pass
         onConnect()
     }
-    Column(Modifier.fillMaxSize().statusBarsPadding().imePadding().padding(start = 20.dp, end = 20.dp, top = 24.dp, bottom = 120.dp)) {
+    // scrollable: without it the keyboard squeezes the fields to a sliver
+    Column(Modifier.fillMaxSize().statusBarsPadding().imePadding().verticalScroll(rememberScrollState()).padding(start = 20.dp, end = 20.dp, top = 24.dp, bottom = 120.dp)) {
         Text("Terminale", style = MaterialTheme.typography.headlineMedium)
         Text("Accesso SSH al tuo server, come nella dashboard web di CasaOS.", color = cs.onSurfaceVariant)
         Spacer(Modifier.height(20.dp))
