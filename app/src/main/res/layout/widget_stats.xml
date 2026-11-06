@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root" android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical" android:background="@drawable/widget_bg" android:padding="16dp">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical">
+        <TextView android:id="@+id/dot" android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="●" android:textSize="10sp" android:textColor="#2BD47D" android:layout_marginEnd="6dp" />
+        <LinearLayout android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:orientation="vertical">
+            <TextView android:id="@+id/host" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="CasaOS" android:textColor="#E8EAF0" android:textSize="15sp" android:textStyle="bold" android:maxLines="1" />
+            <TextView android:id="@+id/status" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Caricamento…" android:textColor="#9AA0AE" android:textSize="11sp" android:maxLines="1" />
+        </LinearLayout>
+        <ImageView android:id="@+id/refresh" android:layout_width="32dp" android:layout_height="32dp" android:padding="6dp"
+            android:src="@drawable/ic_refresh" android:contentDescription="Aggiorna" />
+    </LinearLayout>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp">
+        <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
+            android:text="CPU" android:textColor="#E8EAF0" android:textSize="12sp" android:textStyle="bold" />
+        <TextView android:id="@+id/cpu_val" android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="—" android:textColor="#9AA0AE" android:textSize="12sp" android:maxLines="1" />
+    </LinearLayout>
+    <ProgressBar android:id="@+id/cpu_bar" style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="match_parent" android:layout_height="6dp" android:layout_marginTop="4dp"
+        android:max="100" android:progress="0" android:progressDrawable="@drawable/widget_bar" android:progressTint="#5B6CFF" />
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp">
+        <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
+            android:text="RAM" android:textColor="#E8EAF0" android:textSize="12sp" android:textStyle="bold" />
+        <TextView android:id="@+id/ram_val" android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="—" android:textColor="#9AA0AE" android:textSize="12sp" android:maxLines="1" />
+    </LinearLayout>
+    <ProgressBar android:id="@+id/ram_bar" style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="match_parent" android:layout_height="6dp" android:layout_marginTop="4dp"
+        android:max="100" android:progress="0" android:progressDrawable="@drawable/widget_bar" android:progressTint="#00C2A8" />
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp">
+        <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
+            android:text="Disco" android:textColor="#E8EAF0" android:textSize="12sp" android:textStyle="bold" />
+        <TextView android:id="@+id/disk_val" android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="—" android:textColor="#9AA0AE" android:textSize="12sp" android:maxLines="1" />
+    </LinearLayout>
+    <ProgressBar android:id="@+id/disk_bar" style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="match_parent" android:layout_height="6dp" android:layout_marginTop="4dp"
+        android:max="100" android:progress="0" android:progressDrawable="@drawable/widget_bar" android:progressTint="#FFA63D" />
+</LinearLayout>

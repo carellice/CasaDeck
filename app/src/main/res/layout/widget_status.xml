@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root" android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical" android:background="@drawable/widget_bg" android:padding="14dp" android:gravity="center_vertical">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical">
+        <TextView android:id="@+id/dot" android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="●" android:textSize="10sp" android:textColor="#2BD47D" android:layout_marginEnd="6dp" />
+        <TextView android:id="@+id/host" android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="CasaOS" android:textColor="#E8EAF0" android:textSize="14sp" android:textStyle="bold" android:maxLines="1" />
+    </LinearLayout>
+    <TextView android:id="@+id/line1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp"
+        android:text="Caricamento…" android:textColor="#E8EAF0" android:textSize="18sp" android:maxLines="1" />
+    <TextView android:id="@+id/line2" android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:text="" android:textColor="#9AA0AE" android:textSize="12sp" android:maxLines="1" />
+</LinearLayout>

@@ -1,0 +1,71 @@
+<!doctype html>
+<html><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<style>/*XTERM_CSS*/</style>
+<style>
+  html,body{margin:0;height:100%;background:#0B0D12;overflow:hidden}
+  body{display:flex;flex-direction:column}
+  #term{flex:1;min-height:0;padding:6px 6px 0}
+  #keys{display:flex;gap:6px;overflow-x:auto;padding:8px;background:#141821;scrollbar-width:none}
+  #keys::-webkit-scrollbar{display:none}
+  #keys button{flex:0 0 auto;min-width:44px;height:38px;border:0;border-radius:12px;background:#222838;color:#E8EAF0;
+    font:600 14px system-ui,sans-serif;transition:transform .12s,background .2s}
+  #keys button:active{transform:scale(.9);background:#2f3750}
+  #keys button.on{background:var(--accent);color:#fff}
+  #status{position:absolute;top:12px;right:12px;padding:4px 10px;border-radius:99px;font:600 12px system-ui;
+    background:#222838;color:#9AA0AE;transition:opacity .4s}
+</style>
+</head><body>
+<div id="term"></div>
+<div id="keys">
+  <button data-k="esc">Esc</button><button data-k="tab">Tab</button><button id="ctrl">Ctrl</button>
+  <button data-k="up">↑</button><button data-k="down">↓</button><button data-k="left">←</button><button data-k="right">→</button>
+  <button data-s="|">|</button><button data-s="/">/</button><button data-s="-">-</button><button data-s="~">~</button>
+  <button data-k="ctrlc">^C</button><button data-k="ctrld">^D</button>
+</div>
+<div id="status">Connessione…</div>
+<script>/*XTERM_JS*/</script>
+<script>/*FIT_JS*/</script>
+<script>
+  const accent = "ACCENT";
+  document.documentElement.style.setProperty('--accent', accent);
+  const term = new Terminal({cursorBlink:true, fontSize:13, fontFamily:'monospace', allowProposedApi:true,
+    theme:{background:'#0B0D12', foreground:'#E8EAF0', cursor:accent, selectionBackground:accent+'66'}});
+  const fit = new FitAddon.FitAddon();
+  term.loadAddon(fit); term.open(document.getElementById('term')); fit.fit();
+  const status = document.getElementById('status');
+  const setStatus = (t, hide) => { status.textContent = t; status.style.opacity = hide ? 0 : 1; };
+  // cols/rows are only read by CasaOS when connecting, so fit before opening the socket
+  const ws = new WebSocket("WS_URL".replace("COLS", term.cols).replace("ROWS", term.rows));
+  ws.binaryType = 'arraybuffer';
+  ws.onopen = () => { setStatus('Connesso', true); term.focus(); };
+  let authFailed = false;
+  const dec = new TextDecoder(); // stream mode: a UTF-8 char may be split across messages
+  ws.onmessage = e => {
+    const text = typeof e.data === 'string' ? e.data : dec.decode(e.data, {stream: true});
+    // CasaOS retries the SSH login in a loop after a failure, hammering sshd: hang up on the first one
+    if (!authFailed && text.includes('ssh: handshake failed')) {
+      authFailed = true; ws.close();
+      term.write('\x1b[31mAccesso SSH non riuscito: controlla utente, password e porta.\x1b[0m\r\n');
+      return;
+    }
+    if (!authFailed) term.write(text);
+  };
+  ws.onclose = () => { setStatus(authFailed ? 'Accesso negato' : 'Disconnesso'); if (!authFailed) term.write('\r\n\x1b[90m[sessione chiusa]\x1b[0m\r\n'); };
+  ws.onerror = () => setStatus('Errore di connessione');
+  let ctrl = false; const ctrlBtn = document.getElementById('ctrl');
+  const send = d => { if (ws.readyState === 1) ws.send(d); };
+  term.onData(d => {
+    if (ctrl && d.length === 1) { const c = d.toUpperCase().charCodeAt(0); if (c >= 64 && c < 96) d = String.fromCharCode(c - 64); ctrl = false; ctrlBtn.classList.remove('on'); }
+    send(d);
+  });
+  const keys = {esc:'\x1b', tab:'\t', up:'\x1b[A', down:'\x1b[B', right:'\x1b[C', left:'\x1b[D', ctrlc:'\x03', ctrld:'\x04'};
+  document.getElementById('keys').addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    if (b === ctrlBtn) { ctrl = !ctrl; b.classList.toggle('on', ctrl); }
+    else send(b.dataset.k ? keys[b.dataset.k] : b.dataset.s);
+    term.focus();
+  });
+  new ResizeObserver(() => fit.fit()).observe(document.getElementById('term'));
+</script>
+</body></html>

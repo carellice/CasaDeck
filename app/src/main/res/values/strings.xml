@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="widget_stats_desc">CPU, RAM e disco del server</string>
+    <string name="widget_status_desc">Stato del server in breve</string>
+    <string name="widget_apps_desc">Le app CasaOS più usate</string>
+</resources>
