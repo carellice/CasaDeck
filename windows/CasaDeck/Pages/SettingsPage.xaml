@@ -1,0 +1,82 @@
+<Page x:Class="CasaDeck.Pages.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Background="Transparent">
+    <ScrollViewer>
+        <StackPanel Padding="32,20,32,32" Spacing="12" MaxWidth="900" HorizontalAlignment="Left">
+            <StackPanel.ChildrenTransitions>
+                <TransitionCollection><EntranceThemeTransition IsStaggeringEnabled="True" FromVerticalOffset="40" /></TransitionCollection>
+            </StackPanel.ChildrenTransitions>
+            <TextBlock Text="Impostazioni" Style="{StaticResource PageTitle}" />
+
+            <Border Style="{StaticResource Card}">
+                <Grid ColumnSpacing="16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <PersonPicture x:Name="Avatar" Width="56" Height="56" />
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                        <TextBlock x:Name="UserName" Style="{StaticResource SubtitleTextBlockStyle}" />
+                        <TextBlock x:Name="ServerUrl" Style="{StaticResource Secondary}" />
+                    </StackPanel>
+                    <Button Grid.Column="2" Content="Esci" Click="Logout_Click" VerticalAlignment="Center" />
+                </Grid>
+            </Border>
+
+            <TextBlock Text="Aspetto" Style="{StaticResource BodyStrongTextBlockStyle}" Margin="4,12,0,0" />
+            <Border Style="{StaticResource Card}">
+                <StackPanel Spacing="16">
+                    <RadioButtons x:Name="Theme" Header="Tema" SelectionChanged="Theme_SelectionChanged" MaxColumns="3">
+                        <x:String>Sistema</x:String>
+                        <x:String>Chiaro</x:String>
+                        <x:String>Scuro</x:String>
+                    </RadioButtons>
+                    <Slider x:Name="Refresh" Header="Aggiornamento dashboard (secondi)" Minimum="2" Maximum="10" StepFrequency="1"
+                            TickFrequency="1" TickPlacement="Outside" Width="360" HorizontalAlignment="Left" ValueChanged="Refresh_ValueChanged" />
+                </StackPanel>
+            </Border>
+
+            <TextBlock Text="Server" Style="{StaticResource BodyStrongTextBlockStyle}" Margin="4,12,0,0" />
+            <Border Style="{StaticResource Card}">
+                <Grid ColumnSpacing="12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock Text="Alimentazione" Style="{StaticResource BodyStrongTextBlockStyle}" />
+                        <TextBlock Text="Riavvia o spegni il server CasaOS." Style="{StaticResource Secondary}" />
+                    </StackPanel>
+                    <Button Grid.Column="1" Click="Restart_Click">
+                        <StackPanel Orientation="Horizontal" Spacing="8"><FontIcon Glyph="&#xE777;" FontSize="14" /><TextBlock Text="Riavvia" /></StackPanel>
+                    </Button>
+                    <Button Grid.Column="2" Click="Off_Click">
+                        <StackPanel Orientation="Horizontal" Spacing="8"><FontIcon Glyph="&#xE7E8;" FontSize="14" Foreground="{ThemeResource SystemFillColorCriticalBrush}" /><TextBlock Text="Spegni" /></StackPanel>
+                    </Button>
+                </Grid>
+            </Border>
+
+            <TextBlock Text="Informazioni" Style="{StaticResource BodyStrongTextBlockStyle}" Margin="4,12,0,0" />
+            <Border Style="{StaticResource Card}">
+                <Grid ColumnSpacing="16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Border Width="40" Height="40" CornerRadius="10"><Image x:Name="Logo" Stretch="UniformToFill" /></Border>
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                        <TextBlock x:Name="Version" Style="{StaticResource BodyStrongTextBlockStyle}" />
+                        <TextBlock Text="Client non ufficiale, non affiliato al team CasaOS / IceWhale." Style="{StaticResource Secondary}" />
+                    </StackPanel>
+                    <Button Grid.Column="2" Click="Check_Click" VerticalAlignment="Center">
+                        <StackPanel Orientation="Horizontal" Spacing="8"><FontIcon Glyph="&#xE895;" FontSize="14" /><TextBlock Text="Cerca aggiornamenti" /></StackPanel>
+                    </Button>
+                </Grid>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

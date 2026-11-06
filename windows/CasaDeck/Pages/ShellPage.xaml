@@ -1,0 +1,33 @@
+<Page x:Class="CasaDeck.Pages.ShellPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Background="Transparent">
+    <NavigationView x:Name="Nav" IsBackButtonVisible="Collapsed" PaneDisplayMode="Left" OpenPaneLength="230"
+                    IsSettingsVisible="True" SelectionChanged="Nav_SelectionChanged">
+        <NavigationView.MenuItems>
+            <NavigationViewItem Content="Home" Tag="0" Icon="Home" />
+            <NavigationViewItem Content="App" Tag="1">
+                <NavigationViewItem.Icon><FontIcon Glyph="&#xE71D;" /></NavigationViewItem.Icon>
+            </NavigationViewItem>
+            <NavigationViewItem Content="File" Tag="2" Icon="Folder" />
+            <NavigationViewItem Content="Terminale" Tag="3">
+                <NavigationViewItem.Icon><FontIcon Glyph="&#xE756;" /></NavigationViewItem.Icon>
+            </NavigationViewItem>
+        </NavigationView.MenuItems>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <InfoBar x:Name="UpdateBar" Severity="Informational" Margin="24,12,24,0" IsClosable="True">
+                <InfoBar.ActionButton>
+                    <Button x:Name="UpdateButton" Content="Aggiorna" Style="{StaticResource AccentButtonStyle}" Click="Update_Click" />
+                </InfoBar.ActionButton>
+                <InfoBar.Content>
+                    <ProgressBar x:Name="UpdateProgress" Visibility="Collapsed" Margin="0,0,0,12" Maximum="1" />
+                </InfoBar.Content>
+            </InfoBar>
+            <Frame x:Name="Body" Grid.Row="1" />
+        </Grid>
+    </NavigationView>
+</Page>
