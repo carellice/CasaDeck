@@ -159,11 +159,12 @@ fun SettingsScreen(vm: CasaViewModel) {
             }
         }
         item {
-            Text(
-                "CasaDeck 1.0", Modifier.fillMaxWidth().padding(top = 8.dp),
-                style = MaterialTheme.typography.bodySmall, color = cs.outline,
-                textAlign = androidx.compose.ui.text.style.TextAlign.Center,
-            )
+            Column(Modifier.fillMaxWidth().padding(top = 8.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                Text("CasaDeck ${vm.version}", style = MaterialTheme.typography.bodySmall, color = cs.outline)
+                TextButton({ vm.checkUpdate(manual = true) }) {
+                    Icon(Icons.Rounded.SystemUpdate, null, Modifier.size(18.dp)); Spacer(Modifier.width(8.dp)); Text("Cerca aggiornamenti")
+                }
+            }
         }
     }
 

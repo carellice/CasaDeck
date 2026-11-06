@@ -39,6 +39,32 @@ class CasaViewModel(app: Application) : AndroidViewModel(app) {
     val locked = MutableStateFlow(prefs.lock && prefs.access.isNotEmpty())
     /** SSH password is kept in memory only, never written to disk. */
     var sshPass = ""
+    val version = Updater.current(app)
+    /** Newer GitHub release, shown as a dialog until dismissed. */
+    val update = MutableStateFlow<Updater.Release?>(null)
+    /** Apk download progress 0..1 while an update is downloading. */
+    val updateProgress = MutableStateFlow<Float?>(null)
+
+    init { checkUpdate() }
+
+    fun checkUpdate(manual: Boolean = false) = viewModelScope.launch {
+        val r = runCatching { Updater.latest() }.getOrNull()
+        when {
+            r != null && Updater.newer(r.version, version) -> update.value = r
+            manual -> message.value = if (r == null) "Impossibile controllare gli aggiornamenti" else "Hai già l'ultima versione"
+        }
+    }
+
+    fun installUpdate(r: Updater.Release) {
+        if (updateProgress.value != null) return
+        viewModelScope.launch {
+            updateProgress.value = 0f
+            runCatching { Updater.download(getApplication(), r.apkUrl) { updateProgress.value = it } }
+                .onSuccess { Updater.install(getApplication(), it); update.value = null }
+                .onFailure { message.value = "Download dell'aggiornamento non riuscito" }
+            updateProgress.value = null
+        }
+    }
 
     fun setLock(on: Boolean) { prefs.lock = on; lockOn.value = on }
 

@@ -83,6 +83,8 @@ fun MainScreen(vm: CasaViewModel) {
         val quick by vm.quickPick.collectAsState()
         // the sheet is its own window and would sit above the lock screen, so wait for unlock
         if (quick && !locked) QuickAppsSheet(vm)
+        val update by vm.update.collectAsState()
+        update?.let { if (!locked) UpdateDialog(vm, it) }
 
         AnimatedVisibility(locked, enter = fadeIn(), exit = fadeOut(tween(400)) + scaleOut(targetScale = 1.1f)) {
             LockScreen { vm.locked.value = false }
@@ -120,6 +122,27 @@ private fun NavPill(current: Tab, onSelect: (Tab) -> Unit, modifier: Modifier) {
             }
         }
     }
+}
+
+@Composable
+private fun UpdateDialog(vm: CasaViewModel, r: dev.casadeck.Updater.Release) {
+    val progress by vm.updateProgress.collectAsState()
+    AlertDialog(
+        onDismissRequest = { if (progress == null) vm.update.value = null },
+        icon = { Icon(Icons.Rounded.SystemUpdate, null) },
+        title = { Text("CasaDeck ${r.version} disponibile") },
+        text = {
+            Column {
+                Text(r.notes.ifBlank { "È disponibile una nuova versione." }, maxLines = 8, overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis)
+                progress?.let {
+                    Spacer(Modifier.height(16.dp))
+                    LinearProgressIndicator({ it }, Modifier.fillMaxWidth())
+                }
+            }
+        },
+        confirmButton = { TextButton({ vm.installUpdate(r) }, enabled = progress == null) { Text(if (progress == null) "Aggiorna" else "Download…") } },
+        dismissButton = { TextButton({ vm.update.value = null }, enabled = progress == null) { Text("Più tardi") } },
+    )
 }
 
 /** "Most used apps" picker, opened from the quick-settings tile. */
