@@ -1,8 +1,9 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp" android:height="108dp"
     android:viewportWidth="108" android:viewportHeight="108">
+    <!-- themed-icon glyph: CasaOS-style three-circle cloud with Android antennae -->
     <path android:fillColor="#FFFFFF"
-        android:pathData="M54,30 L80,51 Q82,53 79,53 L75,53 L75,74 Q75,78 71,78 L37,78 Q33,78 33,74 L33,53 L29,53 Q26,53 28,51 Z" />
-    <path android:fillColor="#5B6CFF"
-        android:pathData="M39,63 L46,63 L50,56 L55,69 L59,60 L69,60 L69,63 L61,63 L56,74 L51,62 L48,66 L39,66 Z" />
+        android:pathData="M54,38 m-14,0 a14,14 0 1,0 28,0 a14,14 0 1,0 -28,0 M39,60 m-13,0 a13,13 0 1,0 26,0 a13,13 0 1,0 -26,0 M69,60 m-13,0 a13,13 0 1,0 26,0 a13,13 0 1,0 -26,0 M54,48 m-12,0 a12,12 0 1,0 24,0 a12,12 0 1,0 -24,0" />
+    <path android:strokeColor="#FFFFFF" android:strokeWidth="2.6" android:strokeLineCap="round"
+        android:pathData="M46,27 L43,22 M62,27 L65,22" />
 </vector>

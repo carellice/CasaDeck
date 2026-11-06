@@ -4,5 +4,6 @@
         <item name="android:windowBackground">@color/ic_bg</item>
     </style>
     <color name="ic_bg">#0D0F14</color>
+    <color name="ic_launcher_bg">#0F2150</color>
     <color name="ic_accent">#5B6CFF</color>
 </resources>
